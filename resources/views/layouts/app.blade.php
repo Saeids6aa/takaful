@@ -4,6 +4,7 @@
 
 <head>
     @include('layouts.header-meta')
+    @yield('style')
 </head>
 
 
@@ -51,7 +52,7 @@
                         </div>
                         <!--end::Mobile logo-->
                         <!--begin::Wrapper-->
-                            @include('layouts.nav-bar')
+                        @include('layouts.nav-bar')
 
                         <!--end::Wrapper-->
                     </div>
@@ -69,17 +70,17 @@
                                 data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                                 class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                                 <!--begin::Title-->
-                                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Dashboard
+                                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">لوحة التحكم
                                     <!--begin::Separator-->
                                     <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                     <!--end::Separator-->
                                     <!--begin::Description-->
-                                    <small class="text-muted fs-7 fw-bold my-1 ms-1">#XRS-45670</small>
+                                    <small class="text-muted fs-7 fw-bold my-1 ms-1">@yield('page-title')</small>
                                     <!--end::Description-->
                                 </h1>
                                 <!--end::Title-->
                             </div>
-                          
+
                         </div>
                         <!--end::Container-->
                     </div>
@@ -109,8 +110,8 @@
                         id="kt_activities_close">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
                                 <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
                                     transform="rotate(-45 6 17.3137)" fill="black" />
                                 <rect x="7.41422" y="6" width="16" height="2" rx="1"
@@ -1252,7 +1253,7 @@
         </div>
         <!--end::Messenger-->
     </div>
- 
+
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
         <span class="svg-icon">
@@ -1267,8 +1268,12 @@
         </span>
         <!--end::Svg Icon-->
     </div>
+    <!-- داخل layout أو الصفحة نفسها -->
+ <!-- Modal -->
+<!-- Modal structure only -->
 
     @include('layouts.footer-meta')
+    @yield('script')
 </body>
 
 </html>

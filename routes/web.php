@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    //categories Routes:
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', action: [CategoriesController::class, 'index'])->name('categories.index');
+        Route::post('/AjaxDT', [CategoriesController::class, 'AjaxDT']);
+        Route::get('/create', [CategoriesController::class, 'create'])->name('categories.create');
+        Route::post('/store', [CategoriesController::class, 'store'])->name('categories.store');
+        Route::get('/delete/{id}', [CategoriesController::class, 'delete'])->name('categories.delete');
+        
+    });
 });

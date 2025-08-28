@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Giving extends Model
 {
     use HasFactory;
+   protected $fillable = [
+        'name',
+        'quantity',
+        'category_id',
+        'doner_id',
+      
+    ];  
 }
