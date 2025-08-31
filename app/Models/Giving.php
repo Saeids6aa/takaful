@@ -15,4 +15,13 @@ class Giving extends Model
         'doner_id',
       
     ];  
+        public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function doner()
+    {
+        return $this->belongsTo(Doner::class);
+    }
 }

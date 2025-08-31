@@ -33752,7 +33752,7 @@ a:hover {
 }
 
 .menu-item.show .menu-link .menu-arrow:after {
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
   transition: transform 0.3s ease;
 }
 
@@ -45693,7 +45693,7 @@ code:not([class*=language-]) {
 
 .rotate-90 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-90, .active > .rotate-90 {
   transform: rotateZ(-90deg);
@@ -45705,7 +45705,7 @@ code:not([class*=language-]) {
 
 .rotate-n90 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-n90, .active > .rotate-n90 {
   transform: rotateZ(90deg);
@@ -45717,7 +45717,7 @@ code:not([class*=language-]) {
 
 .rotate-180 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-180, .active > .rotate-180 {
   transform: rotateZ(-180deg);
@@ -45729,7 +45729,7 @@ code:not([class*=language-]) {
 
 .rotate-n180 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-n180, .active > .rotate-n180 {
   transform: rotateZ(180deg);
@@ -45741,7 +45741,7 @@ code:not([class*=language-]) {
 
 .rotate-270 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-270, .active > .rotate-270 {
   transform: rotateZ(-270deg);
@@ -45753,7 +45753,7 @@ code:not([class*=language-]) {
 
 .rotate-n270 {
   transition: transform 0.3s ease;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
 }
 .collapsible:not(.collapsed) > .rotate-n270, .active > .rotate-n270 {
   transform: rotateZ(270deg);

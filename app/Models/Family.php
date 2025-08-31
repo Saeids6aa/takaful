@@ -19,4 +19,8 @@ class Family extends Model
         'camp_id',
 
     ];
+        public function camp()
+    {
+        return $this->belongsTo(Camp::class);
+    }
 }

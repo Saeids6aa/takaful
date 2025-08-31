@@ -16,4 +16,9 @@ class Campaign_delivery extends Model
         'image',
         'description',
     ];
+
+        public function campaign() { return $this->belongsTo(Campaign::class); }
+    public function family()   { return $this->belongsTo(Family::class, 'familiy_id'); }
+    public function admin()    { return $this->belongsTo(Admin::class); }
+
 }

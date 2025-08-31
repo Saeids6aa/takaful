@@ -10,7 +10,6 @@
                 </div>
             </div>
 
-            <!-- Form Submit Buttons -->
             <div class="col-sm-8 offset-sm-4 pt-4">
                 <button type="submit" data-refresh="true" class="btn green btn-primary">حفظ</button>
                 <a class="btn btn-default" data-bs-dismiss="modal">الغاء</a>

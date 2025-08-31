@@ -9,7 +9,7 @@
 <script src="{{ asset('backend/assets/js/custom/modals/create-app.js') }}"></script>
 <script src="{{ asset('backend/assets/js/custom/modals/upgrade-plan.js') }}"></script>
 <script src="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script src="{{ asset('backend/assets/plugins/nprogress-master/nprogress.js') }}"></script>
+{{-- <script src="{{ asset('backend/assets/plugins/nprogress-master/nprogress.js') }}"></script> --}}
 
 
 <script>
@@ -104,13 +104,19 @@
         "font-family": "Poppins"
     };
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+ {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+{{-- <script src="{{ asset('backend/assets/js/jquery/jquery-3.6.0.min.js') }}"></script> --}}
+<script src="{{ asset('backend/assets/js/jquery/select2.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/jquery/jquery.form.min.js') }}"></script>
+
 
 
 <script>
-    $(function() {
+   // زر الحذف في actions 
+   $(function() {
         $(".select2").select2();
         $(document).on("click", ".ConfirmLink", function() {
             var id = $(this).attr("data-id");
@@ -188,10 +194,10 @@
             $("#Confirm .btn-danger").click(function(e) {
                 $.get($("#Confirm .btn-danger").attr("href"), function(json) {
                     if (json.status == 1) {
-                        ShowMessage(json.msg, "success", "TMS");
+                        ShowMessage(json.msg, "success", "تكافل");
 
                     } else {
-                        ShowMessage(json.msg, "error", "TMS");
+                        ShowMessage(json.msg, "error", "تكافل");
                     }
                     BindDataTable();
                     // cDataTable();
@@ -210,6 +216,7 @@ function PageLoadMethods() {
     handleAjaxForm(".ajaxForm");
     handleAjaxForm(".ajaxFormss");
 
+    
     function handleAjaxForm(selector) {
         $(selector).ajaxForm({
             beforeSubmit: function () {

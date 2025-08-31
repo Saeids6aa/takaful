@@ -14,5 +14,21 @@ class Campaign extends Model
         'description',
         'category_id',
         'admin_id',
+        'camp_id',
+        'quantity',
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class); // campaigns.category_id -> categories.id
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class); // campaigns.admin_id -> admins.id
+    }
+
+    public function camp()
+    {
+        return $this->belongsTo(Camp::class);
+    }
 }
