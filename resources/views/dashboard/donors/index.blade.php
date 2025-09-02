@@ -43,48 +43,52 @@
 @section('script')
 <script src="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
-$(function () {
-  $('#tblDoners').DataTable({
-    lengthMenu: [5,10,25,50],
-    pageLength: 10,
-    paging: true,
-    searching: true,
-    ordering: false,
-    info: true,
-    autoWidth: false,
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    stateSave: true,
-    dom: '<"top"i>rt<"bottom"flp><"clear">',
 
-    ajax: {
-      type: "POST",
-      url: '/dashboard/donors/AjaxDT/',
-      data: function (d) { d._token = "{{ csrf_token() }}"; }
-    },
-
-    columns: [
-      { data: 'id',            name: 'id' },
-      { data: 'name',          name: 'name' },
-      { data: 'contact_phone', name: 'contact_phone' },
-      { data: 'address',       name: 'address' },
-      { data: 'created_at',    name: 'created_at' },
-      { data: 'actions',       name: 'actions', orderable:false, searchable:false, className:'text-center' },
-    ],
-  });
-
-  // حذف
-  $(document).on('click', '.ConfirmLink', function(){
-    if(!confirm('تأكيد الحذف؟')) return;
-    const url = $(this).data('url');
-    $.ajax({
-      url, type:'POST',
-      data:{ _method:'DELETE', _token:'{{ csrf_token() }}' },
-      success: () => $('#tblDoners').DataTable().ajax.reload(null,false),
-      error:   () => alert('فشل الحذف')
+    $(function () {
+      BindDataTable();
     });
-  });
-});
-</script>
+    var oTable;
+    function BindDataTable() {
+      oTable = $("#tblDoners").dataTable({
+        lengthMenu: [10, 25, 50],
+        pageLength: 10,
+        "paging": true,
+        "searching": false,
+        "ordering": false,
+        "info": true,
+        "responsive": true,
+        serverSide: true,
+        "bDestroy": true,
+        "bSort": true,
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bStateSave": true,
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        columns: [
+          { data: 'id', name: 'id' },
+          { data: 'name', name: 'name' },
+          { data: 'contact_phone', name: 'contact_phone' },
+          { data: 'address', name: 'address' },
+          { data: 'Date', name: 'Date' },
+          {
+            data: 'actions',
+            name: 'actions',
+            orderable: false,
+            searchable: false,
+            sClass: 'text-center'
+          },
+        ],
+        ajax: {
+          type: "post",
+          contentType: "application/json",
+          url: "/dashboard/donors/AjaxDT",
+          data: function (d) {
+            d._token = "{{ csrf_token() }}";
+            return JSON.stringify(d);
+          },
+        },
+      });
+    }
+
+  </script>
 @endsection

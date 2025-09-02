@@ -16,6 +16,7 @@ class Campaign extends Model
         'admin_id',
         'camp_id',
         'quantity',
+        'status',
     ];
     public function category()
     {

@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <form method="post" action="{{ route('camps.update', $camp->id) }}" class="ajaxForm">
       @csrf
-      <input type="hidden" name="_method" value="POST"><!-- لو حاب REST: خلّيها PUT وعدّل الروت -->
+      <input type="hidden" name="_method" value="POST">
 
       <div class="form-group row">
         <label for="name" class="col-3 col-form-label">الاسم :</label>

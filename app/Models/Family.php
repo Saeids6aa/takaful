@@ -16,7 +16,8 @@ class Family extends Model
         'status',
         'id_number',
         'family_member',
-        'camp_id',
+        'camp_id', 
+        'phone',
 
     ];
         public function camp()

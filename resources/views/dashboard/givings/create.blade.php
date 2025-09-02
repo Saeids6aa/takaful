@@ -9,29 +9,33 @@
           <input class="form-control" name="name" id="name" type="text">
         </div>
       </div>
-
+      <br>
       <div class="form-group row">
         <label for="quantity" class="col-3 col-form-label">الكمية :</label>
         <div class="col-8">
-          <input class="form-control" name="quantity" id="quantity" type="number" min="1">
+          <input class="form-control" name="quantity" id="quantity" type="number">
         </div>
       </div>
+      <br>
 
       <div class="form-group row">
         <label for="category_id" class="col-3 col-form-label">الفئة :</label>
         <div class="col-8">
           <select class="form-control" name="category_id" id="category_id">
+            <option disabled selected>الفئة</option>
             @foreach($categories as $cat)
               <option value="{{ $cat->id }}">{{ $cat->name }}</option>
             @endforeach
           </select>
         </div>
       </div>
+      <br>
 
       <div class="form-group row">
         <label for="doner_id" class="col-3 col-form-label">المتبرع :</label>
         <div class="col-8">
           <select class="form-control" name="doner_id" id="doner_id">
+            <option disabled selected>المتبرع</option>
             @foreach($doners as $d)
               <option value="{{ $d->id }}">{{ $d->name }}</option>
             @endforeach

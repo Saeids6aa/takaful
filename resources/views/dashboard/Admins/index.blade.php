@@ -53,7 +53,7 @@
                                                 <th>الصلاحيات</th>
                                                 <th>تاريخ الإنشاء</th>
                                                 <th>الصورة</th>
-                                                <th>الإجراءات</th> <!-- مفقود سابقًا -->
+                                                <th>الإجراءات</th> 
                                             </tr>
                                         </thead>
 
@@ -71,40 +71,52 @@
 @section('script')
     <script src="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
-    <script>
-        $(function () { initAdminsDT(); });
+  <script>
+        $(document).ready(function(){
+            BindDataTable();
 
-        function initAdminsDT() {
-            $('#tblAjax').DataTable({
-                lengthMenu: [5, 10, 25, 50],
+        });
+        // $(function () {
+        //     BindDataTable();
+        // });
+        var oTable;
+
+
+        function BindDataTable() {
+            oTable = $('#tblAjax').dataTable({
+                lengthMenu: [10, 25, 50],
                 pageLength: 10,
-                paging: true,
-                searching: true,
-                ordering: false,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-                processing: true,
+                "paging": true,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "responsive": true,
                 serverSide: true,
-                stateSave: true,
-                dom: '<"top"i>rt<"bottom"flp><"clear">',
-
-                ajax: {
-                    type: "POST",
-                    url: '/dashboard/admins/AjaxDT/',
-                    data: function (d) { d._token = "{{ csrf_token() }}"; }
-                },
-
+                "bDestroy": true,
+                "bSort": true,
+                "iDisplayLength": 10,
+                "sPaginationType": "full_numbers",
+                "bStateSave": true,
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'phone', name: 'phone' },
                     { data: 'id_number', name: 'id_number' },
                     { data: 'role', name: 'role' },
-                    { data: 'created_at', name: 'created_at' },
+                    { data: 'Date', name: 'Date' },
                     { data: 'image', name: 'image', orderable: false, searchable: false },
                     { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'text-center' },
-                ],
+                ], ajax: {
+                    type: "POST",
+                    contentType: "application/json",
+                    url: '/dashboard/admins/AjaxDT',
+                    data: function (d) {
+                        d._token = "{{ csrf_token() }}";
+                        return JSON.stringify(d);
+                    },
+                }
+                
             });
         }
     </script>

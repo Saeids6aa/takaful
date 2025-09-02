@@ -27,7 +27,8 @@ class CategoriesController extends Controller
                 DB::raw("DATE_FORMAT(categories.created_at,'%Y-%m-%d') as Date"),
             )->get();
             return DataTables::of($categories)
-                ->addColumn('actions', function ($categories) {
+                
+            ->addColumn('actions', function ($categories) {
                     return '<a href="/dashboard/categories/edit/' . $categories->id . '" data-id="' . $categories->id . '" title="تعديل الفئة ' . ($categories->name) . '" class="Popup" data-toggle="modal"><i class="la la-edit icon-xl" style="color:blue;padding:4px"></i></a>
                         <a href="/dashboard/categories/delete/' . $categories->id . '" data-id="' . $categories->id . '"   data-name="' . htmlspecialchars($categories->name) . '"   class="ConfirmLink "' . ' id="' . $categories->id . '"><i class="fa fa-trash-alt icon-md" style="color:red"></i></a>';
                 })->rawColumns(['actions'])->make(true);
@@ -48,6 +49,11 @@ class CategoriesController extends Controller
             [
                 'name' => 'required|string|min:3|max:255',
 
+            ],[
+                'name.required' => 'أسم الفئة مطلوب',
+                'name.string' => 'أسم الفئة يجب ان يكون نص',
+                'name.min' => 'أسم الفئة يجب ان يكون علي الاقل 3 احرف',
+                'name.max' => 'أسم الفئة يجب ان لا يتعدي 255 حرف', 
             ]
         );
         $created_at = Carbon::now();

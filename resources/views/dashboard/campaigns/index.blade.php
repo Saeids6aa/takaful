@@ -49,6 +49,7 @@
                       <th>تمت الإضافة بواسطة</th>
                       <th>المخيم</th>
                       <th>الكمية </th>
+                      <th>حالة الحملة  </th>
                       <th>تاريخ الإضافة</th>
                       <th>الإجراءات</th>
                     </tr>
@@ -93,6 +94,7 @@
           { data: 'adminName', name: 'adminName' },
           { data: 'campName', name: 'campName' },
           { data: 'quantity', name: 'quantity' },
+          { data: 'status', name: 'status' },
           { data: 'Date', name: 'Date' },
           {
             data: 'actions',
@@ -105,7 +107,7 @@
         ajax: {
           type: "post",
           contentType: "application/json",
-          url: "/dashboard/campaigns/AjaxDT/",
+          url: "/dashboard/campaigns/AjaxDT",
           data: function (d) {
             d._token = "{{ csrf_token() }}";
             return JSON.stringify(d);
@@ -116,5 +118,6 @@
       });
     }
 
+    
   </script>
 @endsection

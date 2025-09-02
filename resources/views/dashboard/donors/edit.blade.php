@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-12">
-    <form method="post" action="{{ route('donors.update', $doner->id) }}" class="ajaxForm">
+    <form method="post" action="{{ route('donors.update', parameters: $doner->id) }}" class="ajaxForm">
       @csrf
-      <input type="hidden" name="_method" value="POST"><!-- لو REST حقيقي: خليها PUT -->
+      <input type="hidden" name="_method" value="POST">
 
       <div class="form-group row">
         <label for="name" class="col-3 col-form-label">الاسم :</label>

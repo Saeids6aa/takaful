@@ -1,38 +1,32 @@
 <div class="row">
   <div class="col-sm-12">
-    <form method="post" action="{{ route('campaign-deliveries.update', $row->id) }}" class="ajaxForm" enctype="multipart/form-data">
+    <form method="post" action="{{ route('campaign-deliveries.update', $row->id) }}" class="ajaxForm"
+      enctype="multipart/form-data">
       @csrf
 
-      <div class="form-group row">
-        <label class="col-3 col-form-label">الحالة :</label>
-        <div class="col-8">
-          <select class="form-control" name="status" id="status">
-            <option value="completed"  {{ $row->status=='completed' ? 'selected':'' }}>completed</option>
-            <option value="incomplete" {{ $row->status=='incomplete' ? 'selected':'' }}>incomplete</option>
-          </select>
-        </div>
-      </div>
+      <select name="campaign_id" class="form-control select2" required>
+        <option value="">اختر الحملة</option>
+        @foreach($campaigns as $c)
+          <option value="{{ $c->id }}">{{ $c->title }}</option>
+        @endforeach
+      </select>
 
-      <div class="form-group row">
-        <label class="col-3 col-form-label">الحملة (ID) :</label>
-        <div class="col-8">
-          <input class="form-control" name="campaign_id" id="campaign_id" type="number" min="1" value="{{ $row->campaign_id }}">
-        </div>
-      </div>
+      <select name="familiy_id" class="form-control select2" required>
+        <option value="">اختر العائلة</option>
+        @foreach($families as $f)
+          <option value="{{ $f->id }}">{{ $f->name }}</option>
+        @endforeach
+      </select>
 
-      <div class="form-group row">
-        <label class="col-3 col-form-label">العائلة (ID) :</label>
-        <div class="col-8">
-          <input class="form-control" name="familiy_id" id="familiy_id" type="number" min="1" value="{{ $row->familiy_id }}">
-        </div>
-      </div>
+      <select name="admin_id" class="form-control select2" required>
+        <option value="">اختر المسؤول</option>
+        @foreach($admins as $a)
+          <option value="{{ $a->id }}" {{ auth()->id() == $a->id ? 'selected' : '' }}>
+            {{ $a->name }}
+          </option>
+        @endforeach
+      </select>
 
-      <div class="form-group row">
-        <label class="col-3 col-form-label">المسؤول (ID) :</label>
-        <div class="col-8">
-          <input class="form-control" name="admin_id" id="admin_id" type="number" min="1" value="{{ $row->admin_id }}">
-        </div>
-      </div>
 
       <div class="form-group row">
         <label class="col-3 col-form-label">الصورة :</label>
@@ -40,7 +34,8 @@
           <input class="form-control" name="image" id="image" type="file" accept="image/*">
           @if($row->image)
             <div class="mt-2">
-              <img src="{{ asset('uploads/campaign_deliveries/'.$row->image) }}" style="width:80px;height:80px;border-radius:8px;object-fit:cover" />
+              <img src="{{ asset('uploads/campaign_deliveries/' . $row->image) }}"
+                style="width:80px;height:80px;border-radius:8px;object-fit:cover" />
             </div>
           @endif
         </div>

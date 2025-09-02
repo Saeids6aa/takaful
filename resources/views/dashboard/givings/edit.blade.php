@@ -10,13 +10,14 @@
           <input class="form-control" name="name" id="name" type="text" value="{{ $giving->name }}">
         </div>
       </div>
-
+      <br>
       <div class="form-group row">
         <label for="quantity" class="col-3 col-form-label">الكمية :</label>
         <div class="col-8">
           <input class="form-control" name="quantity" id="quantity" type="number" min="1" value="{{ $giving->quantity }}">
         </div>
       </div>
+      <br>
 
       <div class="form-group row">
         <label for="category_id" class="col-3 col-form-label">الفئة :</label>
@@ -30,6 +31,7 @@
           </select>
         </div>
       </div>
+      <br>
 
       <div class="form-group row">
         <label for="doner_id" class="col-3 col-form-label">المتبرع :</label>

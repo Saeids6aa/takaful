@@ -29,7 +29,7 @@
 
  <link rel="stylesheet" href="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.rtl.css') }}">
  
-<link rel="stylesheet" href="{{ asset('backend/assets/js//jquery/select2.min.js') }}">
+<link rel="stylesheet" href="{{ asset('backend/assets/css/select2.min.css') }}">
 {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
  
  <style>

@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\donorsController;
 use App\Http\Controllers\Admin\familiesController;
 use App\Http\Controllers\Admin\givingsController;
 use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\ComplaintsController;
+use App\Http\Controllers\Home\complanintsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,6 +27,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Route::get('/complain', [complanintsController::class, 'index'])->name('home.complain');
+// Route::post('/complaints/store', [complanintsController::class, 'store'])->name('complaints.store');
+
+// Route::get('/camps',      [HomeController::class, 'camps_name'])->name('camps.list'); 
+// Route::post('/dashboard/campaigns/{id}/change-status', [CampaignsController::class, 'changeStatus'])
+//     ->name('campaigns.changeStatus');
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -39,7 +45,6 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/create', [CategoriesController::class, 'create'])->name('categories.create');
         Route::post('/store', [CategoriesController::class, 'store'])->name('categories.store');
         Route::get('/edit/{id}', [CategoriesController::class, 'edit'])->name('categories.edit');
-        //post && put
         Route::post('/update/{id}', [CategoriesController::class, 'update'])->name('categories.update');
         Route::get('/delete/{id}', [CategoriesController::class, 'delete'])->name('categories.delete');
     });
@@ -50,7 +55,6 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/create', [AdminsController::class, 'create'])->name('admins.create');
         Route::post('/store', [AdminsController::class, 'store'])->name('admins.store');
         Route::get('/edit/{id}', [AdminsController::class, 'edit'])->name('admins.edit');
-        //post && put
         Route::post('/update/{id}', [AdminsController::class, 'update'])->name('admins.update');
         Route::get('/delete/{id}', [AdminsController::class, 'delete'])->name('admins.delete');
     });
@@ -58,7 +62,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     Route::group(['prefix' => 'campaigns'], function () {
         Route::get('/',        [CampaignsController::class, 'index'])->name('campaigns.index');
-        Route::post('/AjaxDT', action: [CampaignsController::class, 'AjaxDT']);
+        Route::post('/AjaxDT',  [CampaignsController::class, 'AjaxDT']);
         Route::get('/create',  [CampaignsController::class, 'create'])->name('campaigns.create');
         Route::post('/store',  [campaignsController::class, 'store'])->name('campaigns.store');
         Route::get('/edit/{id}',   [CampaignsController::class, 'edit'])->name('campaigns.edit');
@@ -74,7 +78,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/store',  [campsController::class, 'store'])->name('camps.store');
         Route::get('/edit/{id}',   [campsController::class, 'edit'])->name('camps.edit');
         Route::post('/update/{id}', [CampsController::class, 'update'])->name('camps.update');
-        Route::delete('/delete/{id}', [campsController::class, 'delete'])->name('camps.delete');
+        Route::get('/delete/{id}', [campsController::class, 'delete'])->name('camps.delete');
     });
 
 
@@ -85,7 +89,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/store',  [familiesController::class, 'store'])->name('families.store');
         Route::get('/edit/{id}',   [familiesController::class, 'edit'])->name('families.edit');
         Route::post('/update/{id}', [familiesController::class, 'update'])->name('families.update');
-        Route::delete('/delete/{id}', [familiesController::class, 'delete'])->name('families.delete');
+        Route::get('/delete/{id}', [familiesController::class, 'delete'])->name('families.delete');
     });
     Route::group(['prefix' => 'givings'], function () {
         Route::get('/',        [givingsController::class, 'index'])->name('givings.index');
@@ -94,7 +98,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/store',  [givingsController::class, 'store'])->name('givings.store');
         Route::get('/edit/{id}',   [givingsController::class, 'edit'])->name('givings.edit');
         Route::post('/update/{id}', [givingsController::class, 'update'])->name('givings.update');
-        Route::delete('/delete/{id}', [givingsController::class, 'delete'])->name('givings.delete');
+        Route::get('/delete/{id}', [givingsController::class, 'delete'])->name('givings.delete');
     });
     Route::group(['prefix' => 'donors'], function () {
         Route::get('/',        [donorsController::class, 'index'])->name('donors.index');
@@ -103,15 +107,15 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/store',  [donorsController::class, 'store'])->name('donors.store');
         Route::get('/edit/{id}',   [donorsController::class, 'edit'])->name('donors.edit');
         Route::post('/update/{id}', [donorsController::class, 'update'])->name('donors.update');
-        Route::delete('/delete/{id}', [donorsController::class, 'delete'])->name('donors.delete');
+        Route::get('/delete/{id}', [donorsController::class, 'delete'])->name('donors.delete');
     });
-    Route::group(['prefix' => '`campaign_deliveries`'], function () {
+    Route::group(['prefix' => 'campaign_deliveries'], function () {
         Route::get('/',        [campaign_deliveriesController::class, 'index'])->name('campaign_deliveries.index');
         Route::post('/AjaxDT', action: [campaign_deliveriesController::class, 'AjaxDT']);
         Route::get('/create',  [campaign_deliveriesController::class, 'create'])->name('campaign_deliveries.create');
         Route::post('/store',  [campaign_deliveriesController::class, 'store'])->name('campaign_deliveries.store');
         Route::get('/edit/{id}',   [campaign_deliveriesController::class, 'edit'])->name('campaign_deliveries.edit');
         Route::post('/update/{id}', [campaign_deliveriesController::class, 'update'])->name('campaign_deliveries.update');
-        Route::delete('/delete/{id}', [campaign_deliveriesController::class, 'delete'])->name('campaign_deliveries.delete');
+        Route::get('/delete/{id}', [campaign_deliveriesController::class, 'delete'])->name('campaign_deliveries.delete');
     });
 });

@@ -27,7 +27,7 @@
               <th class="text-center">#</th>
               <th>الاسم</th>
               <th>العنوان</th>
-              <th>تاريخ الإضافة</th>
+              <th>التاريخ</th>
               <th>الإجراءات</th>
             </tr>
           </thead>
@@ -41,48 +41,54 @@
 
 @section('script')
 <script src="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script>
-$(function () {
-  $('#tblCamps').DataTable({
-    lengthMenu: [5,10,25,50],
-    pageLength: 10,
-    paging: true,
-    searching: true,
-    ordering: false,
-    info: true,
-    autoWidth: false,
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    stateSave: true,
-    dom: '<"top"i>rt<"bottom"flp><"clear">',
+  <script>
 
-    ajax: {
-      type: "POST",
-                    url: '/dashboard/camps/AjaxDT/',
-      data: function (d) { d._token = "{{ csrf_token() }}"; }
-    },
-
-    columns: [
-      { data: 'id',          name: 'id' },
-      { data: 'name',        name: 'name' },
-      { data: 'address',     name: 'address' },
-      { data: 'created_at',  name: 'created_at' },
-      { data: 'actions',     name: 'actions', orderable:false, searchable:false, className:'text-center' },
-    ],
-  });
-
-  // حذف سريع عبر ConfirmLink (اختياري)
-  $(document).on('click', '.ConfirmLink', function(){
-    if(!confirm('تأكيد الحذف؟')) return;
-    const url = $(this).data('url');
-    $.ajax({
-      url, type:'POST',
-      data:{ _method:'DELETE', _token:'{{ csrf_token() }}' },
-      success: () => $('#tblCamps').DataTable().ajax.reload(null,false),
-      error:   () => alert('فشل الحذف')
+    $(function () {
+      BindDataTable();
     });
-  });
-});
-</script>
+    var oTable;
+    function BindDataTable() {
+      oTable = $("#tblCamps").dataTable({
+        lengthMenu: [10, 25, 50],
+        pageLength: 10,
+        "paging": true,
+        "searching": false,
+        "ordering": false,
+        "info": true,
+        "responsive": true,
+        serverSide: true,
+        "bDestroy": true,
+        "bSort": true,
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bStateSave": true,
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        columns: [
+          { data: 'id', name: 'id' },
+          { data: 'name', name: 'name' },
+          { data: 'address', name: 'address' },
+          { data: 'Date', name: 'Date' },
+          {
+            data: 'actions',
+            name: 'actions',
+            orderable: false,
+            searchable: false,
+            sClass: 'text-center'
+          },
+        ],
+        ajax: {
+          type: "post",
+          contentType: "application/json",
+          url: "/dashboard/camps/AjaxDT/",
+          data: function (d) {
+            d._token = "{{ csrf_token() }}";
+            return JSON.stringify(d);
+          },
+        },
+       
+
+      });
+    }
+
+  </script>
 @endsection

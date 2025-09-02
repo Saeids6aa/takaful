@@ -77,7 +77,7 @@
 
         function BindDataTable() {
             oTable = $('#tblAjax').dataTable({
-                lengthMenu: [5, 10, 25, 50],
+                lengthMenu: [10, 25, 50],
                 pageLength: 10,
                 "paging": true,
                 "searching": false,
