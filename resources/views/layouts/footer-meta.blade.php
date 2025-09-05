@@ -60,16 +60,7 @@
             $("#Popup .modal-body").html("<h1 class='text-center'><i style='font-size:50px;' class='fa fa-spinner fa-spin'></i></h1>");
             $("#Popup .modal-title").text($(this).attr("title"));
             $("#Popup .modal-body").load($(this).attr("href"), function() {
-                if (typeof $.fn.select2 === 'function') {
-                    $('#Popup .select2').each(function () {
-                        $(this).select2({
-                            width: '100%',
-                            dir: 'rtl',
-                            dropdownParent: $('#Popup'),
-                            allowClear: true
-                        });
-                    });
-                }
+            
             });
             $("#Popup").modal("show");
             return false;

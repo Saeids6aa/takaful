@@ -26,7 +26,7 @@ class donorsController extends Controller
                 'doners.address',
                 'doners.created_at',
                 DB::raw("DATE_FORMAT(doners.created_at,'%Y-%m-%d') as Date"),
-            )->get();
+            )->where('doners.isDelete', 0)->get();
             return DataTables::of($doners)
                 ->addColumn('actions', function ($doners) {
                     return '<a href="/dashboard/donors/edit/' . $doners->id . '" data-id="' . $doners->id . '" title="تعديل بيانات المتبرع ' . ($doners->name) . '" class="Popup" data-toggle="modal"><i class="la la-edit icon-xl" style="color:blue;padding:4px"></i></a>
@@ -46,7 +46,10 @@ class donorsController extends Controller
     {
         $request->validate([
             'name'          => 'required|string|min:3|max:255',
-            'contact_phone' => 'required|numeric|unique:doners,contact_phone',
+            'contact_phone' => [
+                'required',
+                'regex:/^\+?[0-9]{0,13}$/',
+            ],
             'address'       => 'required|string|min:3|max:255',
         ], [
             'name.required'           => 'الاسم مطلوب',
@@ -91,7 +94,7 @@ class donorsController extends Controller
             'name'          => 'required|string|min:3|max:255',
             'contact_phone' => [
                 'required',
-                'numeric',
+                'regex:/^\+?[0-9]{0,13}$/',
                 Rule::unique('doners', 'contact_phone')->ignore($id),
             ],
             'address'       => 'required|string|min:3|max:255',
@@ -122,7 +125,11 @@ class donorsController extends Controller
 
     public function delete($id)
     {
-        Doner::findOrFail($id)->delete();
+        $doner  = Doner::findOrFail($id);
+
+        $doner->isDelete = 1;
+        $doner->save();
+
         return response()->json(['status' => 1, 'msg' => 'تم حذف المتبرع بنجاح']);
     }
 }

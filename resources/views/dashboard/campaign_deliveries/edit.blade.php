@@ -1,4 +1,4 @@
-<div class="row">
+{{-- <div class="row">
   <div class="col-sm-12">
     <form method="post" action="{{ route('campaign-deliveries.update', $row->id) }}" class="ajaxForm"
       enctype="multipart/form-data">
@@ -56,4 +56,10 @@
   </div>
 </div>
 
-<script> PageLoadMethods(); </script>
+<script> PageLoadMethods(); </script> --}}
+
+
+
+
+{{-- ممكن لو كانت حالة غير مستلم وكانت الحملة  فيد التنفيذ 
+ان يتم التحقق من حالة الاستلام اذا غير مكتمل يتم تحديث الحالة وتسليم الطرد  --}}

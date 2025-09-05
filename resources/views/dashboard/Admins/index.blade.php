@@ -48,12 +48,10 @@
                                             <tr class="fw-bold text-muted" style="color:#fff!important">
                                                 <th class="text-center">#</th>
                                                 <th>الاسم</th>
-                                                <th>الهاتف</th>
-                                                <th>رقم الهوية</th>
+                                                <th>رقم الهاتف</th>
                                                 <th>الصلاحيات</th>
-                                                <th>تاريخ الإنشاء</th>
-                                                <th>الصورة</th>
-                                                <th>الإجراءات</th> 
+                                                <th> الصورة</th>
+                                                <th>الإجراءات</th>
                                             </tr>
                                         </thead>
 
@@ -71,8 +69,8 @@
 @section('script')
     <script src="{{ asset('backend/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
-  <script>
-        $(document).ready(function(){
+    <script>
+        $(document).ready(function () {
             BindDataTable();
 
         });
@@ -102,13 +100,11 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'phone', name: 'phone' },
-                    { data: 'id_number', name: 'id_number' },
                     { data: 'role', name: 'role' },
-                    { data: 'Date', name: 'Date' },
-                    { data: 'image', name: 'image', orderable: false, searchable: false },
+                    { data: 'image', name: 'image' },
                     { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'text-center' },
                 ], ajax: {
-                    type: "POST",
+                    method: 'POST',
                     contentType: "application/json",
                     url: '/dashboard/admins/AjaxDT',
                     data: function (d) {
@@ -116,7 +112,7 @@
                         return JSON.stringify(d);
                     },
                 }
-                
+
             });
         }
     </script>

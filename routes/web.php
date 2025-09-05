@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/login', [HomeController::class, 'login'])->name('login');
 // Route::get('/complain', [complanintsController::class, 'index'])->name('home.complain');
 // Route::post('/complaints/store', [complanintsController::class, 'store'])->name('complaints.store');
 
@@ -36,7 +36,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
 
     //categories Routes:
     Route::group(['prefix' => 'categories'], function () {
@@ -57,6 +56,13 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/edit/{id}', [AdminsController::class, 'edit'])->name('admins.edit');
         Route::post('/update/{id}', [AdminsController::class, 'update'])->name('admins.update');
         Route::get('/delete/{id}', [AdminsController::class, 'delete'])->name('admins.delete');
+        Route::get('/show/{id}', [AdminsController::class, 'show'])->name('admins.show');
+
+        //for adopt families
+        Route::get('approve-families/', action: [AdminsController::class, 'approve_families'])->name('aprrover-families.index');
+        Route::post('/approve-families/AjaxDT', action: [AdminsController::class, 'approve_families_AjaxDT']);
+        Route::get('/activate-family/{id}', [AdminsController::class, 'activate_family']);
+        Route::get('/reject-family/{id}', [AdminsController::class, 'reject_family']);
     });
 
 
@@ -69,6 +75,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/update/{id}', [CampaignsController::class, 'update'])->name('campaigns.update');
         Route::get('/delete/{id}', [CampaignsController::class, 'delete'])->name('campaigns.delete');
         Route::get('/category_quantity/{id}', [CampaignsController::class, 'category_quantity'])->name('category_quantity');
+        Route::get('/givings-by-category/{category_id}', [CampaignsController::class, 'byCategory']);
     });
 
     Route::group(['prefix' => 'camps'], function () {
@@ -81,7 +88,6 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/delete/{id}', [campsController::class, 'delete'])->name('camps.delete');
     });
 
-
     Route::group(['prefix' => 'families'], function () {
         Route::get('/',        [familiesController::class, 'index'])->name('families.index');
         Route::post('/AjaxDT', action: [familiesController::class, 'AjaxDT']);
@@ -90,7 +96,9 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/edit/{id}',   [familiesController::class, 'edit'])->name('families.edit');
         Route::post('/update/{id}', [familiesController::class, 'update'])->name('families.update');
         Route::get('/delete/{id}', [familiesController::class, 'delete'])->name('families.delete');
+        Route::get('/show/{id}', [familiesController::class, 'show'])->name('show');
     });
+
     Route::group(['prefix' => 'givings'], function () {
         Route::get('/',        [givingsController::class, 'index'])->name('givings.index');
         Route::post('/AjaxDT', action: [givingsController::class, 'AjaxDT']);
@@ -117,5 +125,6 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/edit/{id}',   [campaign_deliveriesController::class, 'edit'])->name('campaign_deliveries.edit');
         Route::post('/update/{id}', [campaign_deliveriesController::class, 'update'])->name('campaign_deliveries.update');
         Route::get('/delete/{id}', [campaign_deliveriesController::class, 'delete'])->name('campaign_deliveries.delete');
+        Route::get('/show/{id}', [campaign_deliveriesController::class, 'show'])->name('campaign_deliveries.show');
     });
 });

@@ -1,46 +1,51 @@
 <div class="row">
-  <div class="col-sm-12">
-    <form method="POST" action="{{ route('families.store') }}" class="ajaxForm" autocomplete="off">
-      @csrf
+    <div class="col-sm-12">
+        <form method="post" action="{{ route('families.store') }}" class="ajaxForm" enctype="multipart/form-data">
+            {{ csrf_field() }}
 
-      <input type="hidden" name="status" value="pending">
 
-      <div class="row g-4">
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> الاسم</label>
-          <input type="text" name="name" class="form-control form-control-solid" placeholder="اسم رب الأسرة"
-            minlength="3" maxlength="255">
-        </div>
+           <div class="form-group row">
+    <label for="name" class="col-3 col-form-label">الاسم :</label>
+    <div class="col-8">
+        <input class="form-control" name="name" id="name" type="text" autocomplete="off">
+    </div>
+</div>
 
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> العنوان</label>
-          <input type="text" name="address" class="form-control form-control-solid"
-            placeholder="المدينة / المخيم / الشارع" minlength="3" maxlength="255">
-        </div>
+<div class="form-group row">
+    <label for="phone" class="col-3 col-form-label">رقم الهاتف :</label>
+    <div class="col-8">
+        <input class="form-control" name="phone" id="phone" type="text" autocomplete="off">
+    </div>
+</div>
 
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> رقم الهوية</label>
-          <input type="text" name="id_number" class="form-control form-control-solid" placeholder="401234567"
-            inputmode="numeric" maxlength="20">
-        </div>
+<div class="form-group row">
+    <label for="id_number" class="col-3 col-form-label">رقم الهوية :</label>
+    <div class="col-8">
+        <input class="form-control" name="id_number" id="id_number" type="text" autocomplete="off">
+    </div>
+</div>
 
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> عدد الأفراد</label>
-          <input type="number" name="family_member" class="form-control form-control-solid" min="1" step="1"
-            placeholder="1">
-        </div>
+<div class="form-group row">
+    <label for="address" class="col-3 col-form-label">العنوان :</label>
+    <div class="col-8">
+        <input class="form-control" name="address" id="address" type="text" autocomplete="off">
+    </div>
+</div>
 
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> الهاتف</label>
-          <input type="tel" name="phone" class="form-control form-control-solid" placeholder="05XXXXXXXX"
-            maxlength="20">
-        </div>
 
-        <div class="col-md-6">
-          <label class="form-label fw-bold"> المخيم</label>
-          <select name="camp_id" id="camp_id" class="form-select form-select-solid "
-            data-placeholder="اختر المخيم">
-            <option value="">اختر المخيم</option>
+
+<div class="form-group row">
+    <label for="family_member" class="col-3 col-form-label">عدد أفراد الأسرة :</label>
+    <div class="col-8">
+        <input class="form-control" name="family_member" id="family_member" type="number" min="1" autocomplete="off">
+    </div>
+</div>
+
+      <div class="form-group row">
+        <label for="camp_id" class="col-3 col-form-label">المخيم:</label>
+        <div class="col-8">
+          <select class="form-control" id="camp_id" name="camp_id">
+            <option disabled selected>أخنر المخيم الخاص بك او اقرب مخيم</option>
             @foreach($camps as $camp)
               <option value="{{ $camp->id }}">{{ $camp->name }}</option>
             @endforeach
@@ -48,19 +53,15 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-end gap-3 mt-5">
-        <button type="submit" data-refresh="true" class="btn btn-primary px-6"> حفظ</button>
-        <button type="button" class="btn btn-light px-6" data-bs-dismiss="modal">إلغاء</button>
-      </div>
-    </form>
-  </div>
+<div class="col-sm-8 offset-sm-4 pt-4">
+    <button type="submit" data-refresh="true" class="btn green btn-primary">حفظ</button>
+    <a class="btn btn-default" data-bs-dismiss="modal">الغاء</a>
 </div>
-</script>
+
+        </form>
+    </div>
+</div>
 
 <script>
-
-  PageLoadMethods();
-  // $('.select2').select2({
-
-  // });
+    PageLoadMethods();
 </script>

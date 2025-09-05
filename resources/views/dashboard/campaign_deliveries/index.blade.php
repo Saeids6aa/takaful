@@ -36,12 +36,9 @@
             <thead class="bg-dark text-center">
               <tr class="fw-bold text-muted" style="color:#fff !important">
                 <th>#</th>
-                <th>اسم الحملة</th>
                 <th>العائلة</th>
-                <th>المسؤول</th>
-                <th>الصورة</th>
+                <th>اسم الحملة</th>
                 <th>الحالة</th>
-                <th>التاريخ</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
@@ -82,15 +79,13 @@
         "bStateSave": true,
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
         columns: [
-          { data: 'id', name: 'campaign_deliveries.id' },
-          { data: 'campaign_title', name: 'campaigns.title' },
-          { data: 'familiy_name', name: 'families.name' },
-          { data: 'admin_name', name: 'admins.name' },
-          { data: 'image_thumb', name: 'campaign_deliveries.image', orderable: false, searchable: false },
-          { data: 'status', name: 'campaign_deliveries.status' },
-          { data: 'Date', name: 'Date' },
-          { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'text-center' },
-        ],
+  { data: 'id',              name: 'campaign_deliveries.id' },
+  { data: 'familiy_name',    name: 'families.name' },
+  { data: 'campaign_title',  name: 'campaigns.title' },
+  { data: 'status',          name: 'campaign_deliveries.status' },
+  { data: 'actions',         name: 'actions', orderable:false, searchable:false, className:'text-center' },
+],
+
 
   ajax: {
                     type: "POST",

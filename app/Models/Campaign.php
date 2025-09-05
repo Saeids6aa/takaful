@@ -32,4 +32,9 @@ class Campaign extends Model
     {
         return $this->belongsTo(Camp::class);
     }
+
+    public function giving()
+    {
+        return $this->belongsTo(Giving::class, 'giving_id');
+    }
 }

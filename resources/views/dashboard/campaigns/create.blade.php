@@ -31,6 +31,21 @@
 
       <br>
 
+      <div id="category_quantity_container"></div>
+
+      <div class="form-group row">
+        <label for="giving_id" class="col-3 col-form-label">الفئة:</label>
+
+        <div class="col-8">
+
+          <select name="giving_id" id="giving_id" class="form-control">
+            <option value="">-- اختر مصدر العطاء --</option>
+          </select>
+        </div>
+      </div>
+
+      <br>
+
       <div class="form-group row">
         <div class="col-12" id="category_quantity_container">
           <!-- القيمة رح تنعرض هنا -->
@@ -71,57 +86,59 @@
 
 <script>
   PageLoadMethods();
-
   $(document).ready(function () {
     $(document).on('change', '#category_id', function () {
       var category_id = $(this).val();
-        if(!category_id){
-          $('#category_quantity_container').html('');
+      $('#category_quantity_container').html('');
+      $('#giving_id').html('<option value="">-- اختر مصدر العطاء --</option>');
 
-        }
+      if (!category_id) return;
+
       $.ajax({
         url: '/dashboard/campaigns/category_quantity/' + category_id,
         method: 'GET',
         success: function (response) {
-          $('#category_quantity_container').html('');
-
-          if (response.status) {
-            var html = `
-            <div class="  pb-4 text-center">
-          <small id="category_quantity_hint" class="form-text text-muted">
-           <strong> الكمية المتبقي لهذه الفئة : ${response.total}</strong>
-          </small>
+          let html = `
+          <div class="pb-4 text-center">
+            <small id="category_quantity_hint" class="form-text text-${response.status ? 'muted' : 'danger'}">
+              ${response.status
+              ? `<strong> الكمية المتبقية لهذه الفئة : ${response.total}</strong>`
+              : 'لا يوجد رصيد لهذه الفئة حالياً.'
+            }
+            </small>
           </div>
         `;
-            $('#category_quantity_container').append(html);
-          } else {
-            var html = `
-            <div class="  pb-4 text-center">
-          
-          <small id="category_quantity_hint" class="form-text text-danger">
-            لا يوجد رصيد لهذه الفئة حالياً.
-          </small>
-          </div>
-
-        `;
-            $('#category_quantity_container').append(html);
-          }
+          $('#category_quantity_container').html(html);
         },
         error: function () {
           $('#category_quantity_container').html(`
-                    <div class="  pb-4 text-center">
-
-        <small id="category_quantity_hint" class="form-text text-danger">
-          تعذر جلب الرصيد.
-        </small>
+          <div class="pb-4 text-center">
+            <small class="form-text text-danger">تعذر جلب الرصيد.</small>
           </div>
-
-      `);
+        `);
+        }
+      });
+      //-----------------------------------------------------------------------
+      $.ajax({
+        url: '/dashboard/campaigns/givings-by-category/' + category_id,
+        method: 'GET',
+        success: function (data) {
+          if (data.length === 0) {
+            $('#giving_id').html('<option value="">لا يوجد عطاءات متاحة</option>');
+          } else {
+            let options = '<option value="">-- اختر مصدر العطاء --</option>';
+            for (let i = 0; i < data.length; i++) {
+              options += `<option value="${data[i].id}">${data[i].donor} – الكمية: ${data[i].quantity}</option>`;
+            }
+            $('#giving_id').html(options);
+          }
+        },
+        error: function () {
+          $('#giving_id').html('<option value="">تعذر تحميل العطاءات</option>');
         }
       });
     });
   });
-
 
 
 </script>

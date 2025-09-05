@@ -30,7 +30,7 @@ public function index()
                          DB::raw("DATE_FORMAT(givings.created_at,'%Y-%m-%d') as Date"),
                          'categories.name as category_name',
                          'doners.name     as doner_name',
-            )->orderBy('givings.id', 'desc')->get();
+            )->orderBy('givings.id', 'desc')->where('givings.quantity', '>',0)->get();
 
             return DataTables::of($givings)
                 ->addColumn('actions', function ($givings) {
@@ -93,9 +93,6 @@ public function index()
                 'quantity.min' => 'اقل كمية  يجب ان تكون 1',
                 'category_id.required' => 'تحديد الفئة مطلوب',
                 'doner_id.required' => 'تحديد الممول مطلوب',
-
-
-
 
     ]);
 

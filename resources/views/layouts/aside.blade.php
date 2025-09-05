@@ -15,8 +15,7 @@
             data-kt-toggle-name="aside-minimize">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
             <span class="svg-icon svg-icon-1 rotate-180">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path opacity="0.5"
                         d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z"
                         fill="black" />
@@ -45,15 +44,12 @@
                     <a class="menu-link active" href="{{ route('dashboard') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
                                     <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                        fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                        fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                        fill="black" />
+                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
                                 </svg>
                             </span>
                         </span>
@@ -67,43 +63,52 @@
 
                         <div class="separator mx-1 my-4"></div> <!-- الخططططططط-->
 
-<a class="menu-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">الفئات</span>
-</a>
+                        <a class="menu-link {{ request()->routeIs('categories.*') ? 'active' : '' }}"
+                            href="{{ route('categories.index') }}">
+
+                            <span class="bi-ui-checks-grid"> الفئات</span>
+                        </a>
 
 
-<a class="menu-link {{ request()->routeIs('campaigns.*') ? 'active' : '' }}"  href="{{ route('campaigns.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">الحملات</span>
-</a>
+                        <a class="menu-link {{ request()->routeIs('campaigns.*') ? 'active' : '' }}"
+                            href="{{ route('campaigns.index') }}">
+                            <span class="bi-megaphone"> الحملات</span>
+                        </a>
 
 
-<a class="menu-link {{ request()->routeIs('camps.*') ? 'active' : '' }}"  href="{{ route('camps.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">المخيمات</span>
-</a>
+                        <a class="menu-link {{ request()->routeIs('camps.*') ? 'active' : '' }}"
+                            href="{{ route('camps.index') }}">
+                            <span class="bi-geo-fill"> المخيمات</span>
+                        </a>
 
-<a class="menu-link {{ request()->routeIs('families.*') ? 'active' : '' }}" href="{{ route('families.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">الأسر</span>
-</a>
-<a class="menu-link {{ request()->routeIs('admins.*') ? 'active' : '' }}" href="{{ route('admins.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">المشرفون</span>
-</a>
-<a class="menu-link {{ request()->routeIs('donors.*') ? 'active' : '' }}"  href="{{ route('donors.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">الممولون</span>
-</a>
-<a class="menu-link {{ request()->routeIs('givings.*') ? 'active' : '' }}"  href="{{ route('givings.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">العطاءات</span>
-</a>
-<a class="menu-link {{ request()->routeIs('campaign_deliveries.*') ? 'active' : '' }}"  href="{{ route('campaign_deliveries.index') }}">
-    <span class="menu-icon">...</span>
-    <span class="menu-title">تسليم الطرود</span>
-</a>
+                        <a class="menu-link {{ request()->routeIs('families.index') ? 'active' : '' }}"
+                            href="{{ route('families.index') }}">
+                            <span class="bi-people"> الأسر</span>
+                        </a>
+                        <a class="menu-link {{ request()->routeIs('admins.*') ? 'active' : '' }}"
+                            href="{{ route('admins.index') }}">
+                            <span class="bi-person-badge"> المشرفون</span>
+                        </a>
+                        <a class="menu-link {{ request()->routeIs('donors.*') ? 'active' : '' }}"
+                            href="{{ route('donors.index') }}">
+                            <span class="bi-heart"> الممولون</span>
+                        </a>
+                        <a class="menu-link {{ request()->routeIs('givings.*') ? 'active' : '' }}"
+                            href="{{ route('givings.index') }}">
+                            <span class="bi-archive"> العطاءات</span>
+                        </a>
+                        <a class="menu-link {{ request()->routeIs('campaign_deliveries.*') ? 'active' : '' }}"
+                            href="{{ route('campaign_deliveries.index') }}">
+                            <span class="bi-box-seam"> تسليم الطرود</span>
+                        </a>
+
+                        <div class="separator mx-1 my-4"></div> <!-- الخططططططط-->
+
+                        <a class="menu-link {{ request()->routeIs('aprrover-families.index') ? 'active' : '' }}"
+                            href="{{ route('aprrover-families.index') }}">
+                            <span class="bi-people"> طلبات اعتماد الاسر </span>
+                        </a>
+
 
                     </div>
                 </div>

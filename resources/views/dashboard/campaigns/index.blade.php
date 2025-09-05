@@ -1,4 +1,3 @@
-{{-- resources/views/dashboard/campaigns/index.blade.php --}}
 @extends('layouts.app')
 
 @section('bar-title') الحملات @endsection

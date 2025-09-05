@@ -10,6 +10,7 @@ use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class campaignsController extends Controller
@@ -57,7 +58,7 @@ class campaignsController extends Controller
         }
     }
 
-    
+
 
     public function create()
     {
@@ -69,50 +70,78 @@ class campaignsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'title'       => 'required|string|min:3|max:255',
-                'description' => 'required|string|max:265|min:6',
-                'category_id' => 'required|exists:categories,id',
-                'camp_id' => 'required|exists:camps,id',
-                'quantity' => 'required|numeric'
-            ],
-            [
-                'title.required' => 'العنوان مطلوب',
-                'title.string' => 'العنوان يجب ان يكون نص',
-                'title.min' => 'العنوان يجب ان يكون علي الاقل 3 احرف',
-                'title.max' => 'العنوان يجب ان لا يتعدي 255 حرف',
-                'description.required' => 'الوصف مطلوب',
-                'description.string' => 'الوصف يجب ان يكون نص',
-                'description.min' => 'الوصف يجب ان يكون علي الاقل 3 احرف',
-                'description.max' => 'الوصف يجب ان لا يتعدي 255 حرف',
-                'category_id.required' => 'الفئة مطلوبة',
-                'camp_id.required' => 'المخيم مطلوب',
-                'quantity.required' => 'المخيم مطلوب',
-            ]
-        );
+        $request->validate([
+            'title'       => 'required|string|min:3|max:255',
+            'description' => 'required|string|max:265|min:6',
+            'category_id' => 'required|exists:categories,id',
+            'camp_id'     => 'required|exists:camps,id',
+            'quantity'    => 'required|numeric|min:1',
+            'giving_id'   => ['required', Rule::exists('givings', 'id')->where(
+                fn($q) => $q->where('category_id', $request->category_id)->where('isDelete', 0)
+            )],
+        ], [
+            'title.required' => 'العنوان مطلوب',
+            'description.required' => 'الوصف مطلوب',
+            'category_id.required' => 'الفئة مطلوبة',
+            'camp_id.required' => 'المخيم مطلوب',
+            'quantity.required' => 'الكمية مطلوبة',
+        ]);
 
+        $admin_id   = 1;
         $created_at = Carbon::now();
-        $admin_id = 1;
 
-        $stock = DB::table(table: 'givings')
-            ->where('category_id', $request->category_id)->sum('quantity');
+        // ✅ 1. التأكد من العطاء وكميته
+        $giving = DB::table('givings')
+            ->where('id', $request->giving_id)
+            ->where('category_id', $request->category_id)
+            ->where('isDelete', 0)
+            ->first();
 
-        if ($request->quantity > $stock) {
-            return response()->json(['status' => 0, 'msg' => 'الكمية المطلوبة أكبر من المتاح بالمخزن.']);
-        } else {
-
-            DB::insert(
-                'insert into campaigns (title,description,category_id,camp_id,quantity,admin_id,created_at) values (?,?,?,?,?,?,?)',
-                [$request->title, $request->description, $request->category_id, $request->camp_id, $request->quantity, $admin_id, $created_at]
-            );
-            DB::table('givings')
-                ->where('category_id', $request->category_id)
-                ->decrement('quantity', $request->quantity);
-
-            return response()->json(['status' => 1, 'msg' => 'تم إضافة الحملة بنجاح']);
+        if (!$giving) {
+            return response()->json(['status' => 0, 'msg' => 'العطاء غير صالح أو لا يتبع الفئة المحددة.']);
         }
+
+        if ($giving->quantity < $request->quantity) {
+            return response()->json(['status' => 0, 'msg' => 'الكمية المطلوبة أكبر من المتاح من هذا العطاء.']);
+        }
+
+        // ✅ 2. إنشاء الحملة
+        $campaign_id = DB::table('campaigns')->insertGetId([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'camp_id'     => $request->camp_id,
+            'quantity'    => $request->quantity,
+            'admin_id'    => $admin_id,
+            'status'      => 'Inprogress',
+            'created_at'  => $created_at,
+            'updated_at'  => $created_at,
+        ]);
+
+        // ✅ 3. تسجيل الكمية المستخدمة من هذا العطاء في جدول الوصلة
+        DB::table('campaign_giving')->insert([
+            'campaign_id' => $campaign_id,
+            'giving_id'   => $request->giving_id,
+            'quantity'    => $request->quantity,
+            'created_at'  => now(),
+            'updated_at'  => now(),
+        ]);
+
+        // ✅ 4. خصم الكمية من العطاء
+        DB::table('givings')->where('id', $request->giving_id)->decrement('quantity', $request->quantity);
+
+        // ✅ 5. إذا صارت الكمية صفر، يتم وضع isDelete = 1
+        $remainingQty = DB::table('givings')->where('id', $request->giving_id)->value('quantity');
+        DB::table('givings')->where('id', $request->giving_id)->update([
+            'isDelete'   => ($remainingQty <= 0 ? 1 : 0),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['status' => 1, 'msg' => 'تم إضافة الحملة بنجاح.']);
     }
+
+
+
 
     public function edit($id)
     {
@@ -132,56 +161,68 @@ class campaignsController extends Controller
             'description' => 'nullable|string|max:5000',
             'category_id' => 'required|exists:categories,id',
             'camp_id'     => 'required|exists:camps,id',
+            'giving_id'   => ['nullable', Rule::exists('givings', 'id')->where(
+                fn($q) => $q->where('category_id', $request->category_id)->where('isDelete', 0)
+            )],
             'quantity'    => 'nullable|integer|min:1',
+      
         ], [
-            'title.required'   => 'العنوان مطلوب',
+            'title.required'       => 'العنوان مطلوب',
             'category_id.required' => 'الفئة مطلوبة',
             'camp_id.required'     => 'المخيم مطلوب',
         ]);
 
-
         $campaign = Campaign::findOrFail($id);
-        $campaign->update([
-            'title'       => $request->input('title'),
-            'description' => $request->input('description'),
-            'category_id' => $request->input('category_id'),
-            'camp_id'     => $request->input('camp_id'),
-            'updated_at'  => Carbon::now(),
 
+        $campaign->update([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'camp_id'     => $request->camp_id,
+            'updated_at'  => now(),
         ]);
 
-
         $addQty = (int) $request->quantity;
-        $stock = DB::table('givings')
-            ->where('category_id', $request->category_id)
-            ->sum('quantity');
 
-        if ($addQty > $stock) {
-            return response()->json([
-                'status' => 0,
-                'msg'    => 'الكمية المطلوبة أكبر من المتاح بالمخزن.'
-            ]);
-        } elseif ($request->quantity != null) {
+        if ($addQty && $request->giving_id) {
+            $giving = DB::table('givings')->where('id', $request->giving_id)->first();
 
-            DB::table('campaigns')
-                ->where('id', $campaign->id)
-                ->update([
-                    'quantity' => DB::raw('quantity + ' . $addQty),
+            if (!$giving || $giving->quantity < $addQty) {
+                return response()->json([
+                    'status' => 0,
+                    'msg'    => 'الكمية المطلوبة أكبر من المتاحة لدى هذا المانح.'
                 ]);
+            }
 
             DB::table('givings')
-                ->where('category_id', $request->category_id)
+                ->where('id', $request->giving_id)
                 ->decrement('quantity', $addQty);
+
+            DB::table('givings')
+                ->where('id', $request->giving_id)
+                ->update([
+                    'isDelete'   => ($giving->quantity - $addQty) == 0 ? 1 : 0,
+                    'updated_at' => now(),
+                ]);
+
+            $campaign->increment('quantity', $addQty);
+
+            DB::table('campaign_giving')->insert([
+                'campaign_id' => $campaign->id,
+                'giving_id'   => $request->giving_id,
+                'quantity'    => $addQty,
+                'created_at'  => now(),
+            ]);
 
             return response()->json([
                 'status' => 1,
-                'msg'    => 'تم تحديث الحملة وإضافة الكمية بنجاح.'
+                'msg'    => 'تم تحديث الحملة وإضافة الكمية وربطها بالمانح بنجاح.'
             ]);
         }
 
         return response()->json([
             'status' => 1,
-            'msg'    => 'تم تحديث الحملة بنجاح (بدون خصم من المخزون).'
+            'msg'    => 'تم تحديث بيانات الحملة بنجاح.'
         ]);
     }
 
@@ -209,5 +250,17 @@ class campaignsController extends Controller
             'status' => $total > 0,
             'total'  => (int) $total,
         ]);
+    }
+
+    public function byCategory($category_id)
+    {
+        return DB::table('givings')
+            ->join('doners', 'doners.id', '=', 'givings.doner_id')
+            ->where('givings.category_id', $category_id)
+            ->where('givings.isDelete', 0)
+            ->where('givings.quantity', '>', 0)
+            ->select('givings.id', 'doners.name as donor', 'givings.quantity')
+            ->orderBy('givings.quantity', 'desc')
+            ->get();
     }
 }

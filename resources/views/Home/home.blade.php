@@ -9,25 +9,123 @@
   {{-- Metronic / Bootstrap --}}
   <link rel="stylesheet" href="{{ asset('backend/assets/plugins/global/plugins.bundle.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.bundle.css') }}">
+<style>
+  /* لوحة ألوان من الشعار */
+  :root{
+    /* الأساسي = أزرق مُخضر (كفّ اليد اليمنى/النص الإنجليزي) */
+    --brand-primary: #1E6B77;
+    --brand-primary-rgb: 30,107,119;
 
-  <style>
-    body {
-      background: #f5f8fa
-    }
+    /* نجاح = أخضر (الكف اليسار/الدائرة) */
+    --brand-success: #2E7D4F;
+    --brand-success-rgb: 46,125,79;
 
-    .hero-card {
-      overflow: hidden
-    }
+    /* تحذير = عنبري (العلبة) */
+    --brand-warning: #F2A500;
+    --brand-warning-rgb: 242,165,0;
 
-    .btn-lg {
-      padding-left: 2rem;
-      padding-right: 2rem
-    }
+    --brand-info: #2FA6B1;
+    --brand-info-rgb: 47,166,177;
 
-    .mh-350px {
-      max-height: 350px
-    }
-  </style>
+    --brand-ink: #0E3742;
+    --brand-muted: #6B7280;
+    --brand-surface: #f5f8fa;    
+    --brand-hero: #eef7f9;   
+  }
+
+  /* ربط الألوان المخصصة بمتغيّرات Bootstrap */
+  :root{
+    --bs-primary: var(--brand-primary);
+    --bs-primary-rgb: var(--brand-primary-rgb);
+
+    --bs-success: var(--brand-success);
+    --bs-success-rgb: var(--brand-success-rgb);
+
+    --bs-warning: var(--brand-warning);
+    --bs-warning-rgb: var(--brand-warning-rgb);
+
+    --bs-info: var(--brand-info);
+    --bs-info-rgb: var(--brand-info-rgb);
+
+    --bs-body-color: var(--brand-ink);
+    --bs-body-bg: var(--brand-surface);
+  }
+
+  body{ background: var(--brand-surface); }
+
+  .hero-card{
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .hero-card.bg-light-primary{
+    background: linear-gradient(135deg, var(--brand-hero) 0%, #eaf3f5 100%) !important;
+  }
+  .hero-card .card-body{
+    position: relative;
+  }
+  .hero-card .card-body::before{
+    content:"";
+    position:absolute; inset-inline-start:-120px; inset-block-end:-140px;
+    width:420px; height:420px; border-radius:50%;
+    background: radial-gradient(closest-side, rgba(var(--brand-primary-rgb),.10), transparent 70%);
+    pointer-events:none;
+  }
+
+  h1,h2,h3,h4,h5{ letter-spacing: .1px; }
+  .text-primary{ color: var(--bs-primary) !important; }
+  .text-gray-700{ color: var(--brand-muted) !important; }
+
+  .btn-lg{ padding-inline:2rem; }
+  .btn{ border-radius: 12px; font-weight: 800; }
+
+  .btn-primary{
+    background: var(--bs-primary); border-color: var(--bs-primary);
+  }
+  .btn-primary:hover{ background: #16545D; border-color:#16545D; }
+
+  .btn-light-primary{
+    background: rgba(var(--brand-primary-rgb), .1);
+    color: var(--bs-primary);
+    border: 1px solid rgba(var(--brand-primary-rgb), .15);
+  }
+  .btn-light-primary:hover{
+    background: rgba(var(--brand-primary-rgb), .18);
+    color: #0c3a41;
+  }
+
+  .btn-light-warning{
+    background: rgba(var(--brand-warning-rgb), .12);
+    color: #9a6a00;
+    border: 1px solid rgba(var(--brand-warning-rgb), .18);
+  }
+  .btn-light-warning:hover{
+    background: rgba(var(--brand-warning-rgb), .2);
+    color: #7a5200;
+  }
+
+  .card.card-xl-stretch{
+    border:0; border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.05);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .card.card-xl-stretch:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0,0,0,.08);
+  }
+
+  .text-primary   { color: var(--bs-primary) !important; }
+  .text-success   { color: var(--bs-success) !important; }
+  .text-info      { color: var(--bs-info) !important; }
+
+  .mw-100.mh-350px{
+    filter: saturate(1.05) contrast(1.02);
+  }
+
+  .border-0{ border:0 !important; }
+  .shadow-sm{ box-shadow: 0 8px 20px rgba(0,0,0,.05) !important; }
+</style>
+
 </head>
 
 <body class="app-blank">
@@ -45,21 +143,16 @@
                   أهلاً بك في <span class="text-primary">لوحة تكافل</span>
                 </h1>
                 <p class="fs-5 text-gray-700 mb-10">
-                  نظام إدارة التبرعات، المخيمات، الأسر، والعطاءات — مرن وسريع ومبني على Metronic + Laravel.
+                  نظام إدارة التبرعات، المخيمات، الأسر، والعطاءات — مرن وسريع 
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                  <a href="javascript:void(0)" class="btn btn-light-primary btn-lg px-8 fw-bolder" data-bs-toggle="modal"
-                    data-bs-target="#loginModal">
+                  <a href="{{route('login')}}" class="btn btn-light-primary btn-lg px-8 fw-bolder">
                     تسجيل الدخول
                   </a>
 
-                  <a href="javascript:void(0)" class="btn btn-light-success btn-lg px-8 fw-bolder"
-                    data-bs-toggle="modal" data-bs-target="#addFamilyModal">
-                    تسجيل أسرة
-                  </a>
                 
                 
-                   <a href="{{ route('home.complain') }}" class="btn btn-light-warning btn-lg px-8 fw-bolder" data-bs-toggle="modal"
+                   <a href="" class="btn btn-light-warning btn-lg px-8 fw-bolder" data-bs-toggle="modal"
                 data-bs-target="#complaintModal">
                 الشكاوي
               </a></div>
@@ -69,7 +162,7 @@
 
 
               <div class="text-center mt-10 mt-lg-0">
-                <img class="mw-100 mh-350px" src="{{ asset('backend/assets/media/illustrations/sketchy-1/7.png') }}"
+                <img class="mw-100 mh-350px" src="{{ asset('backend\assets\local_data\logo\Logo_tkafuul.png') }}"
                   alt="Welcome">
               </div>
             </div>
@@ -117,151 +210,8 @@
     </div>
   </div>
 
-  {{-- Complaint Modal --}}
 
-  {{-- Add Family Modal --}}
-  <div class="modal fade" id="addFamilyModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">تسجيل بيانات العائلة</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-        </div>
-        <div class="modal-body">
-          <form method="post" action="{{ route('families.store') }}" class="ajaxForm">
-            @csrf
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">الاسم</label>
-                <input class="form-control" name="name" placeholder="اسم رب الأسرة" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">العنوان</label>
-                <input class="form-control" name="address" placeholder="المدينة / المخيم / الشارع" required>
-              </div>
-              <input type="hidden" name="status" value="pending">
 
-              <div class="col-md-6">
-                <label class="form-label">رقم الهوية</label>
-                <input class="form-control" name="id_number" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">عدد الأفراد</label>
-                <input type="number" class="form-control" name="family_member" min="1" required>
-              </div>
-              <div class="col-md-6">
-                <label for="phone" class="col-3 col-form-label">الهاتف :</label>
-                <input class="form-control" name="phone" id="phone" type="text" autocomplete="off">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">المخيم</label>
-                <select class="form-select select2" name="camp_id" id="camp_id" required>
-                  <option value="">اختر المخيم</option>
-                  @foreach($camps ?? [] as $camp)
-                    <option value="{{ $camp->id }}">{{ $camp->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end gap-2 mt-4">
-              <button type="submit" data-refresh="true" class="btn btn-primary">حفظ</button>
-              <button type="button" class="btn btn-light" data-bs-dismiss="modal">إلغاء</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {{-- Login Modal --}}
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">تسجيل الدخول</h5>
-          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-        </div>
-        <div class="modal-body">
-          <form method="post" action="{{ Route::has('login') ? route('login') : '' }}" class="ajaxForm"
-            autocomplete="off">
-            @csrf
-            <div class="mb-3">
-              <label class="form-label">البريد الإلكتروني / اسم المستخدم</label>
-              <input type="text" name="email" class="form-control" placeholder="example@mail.com" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">كلمة المرور</label>
-              <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-            </div>
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <label class="form-check form-check-sm">
-                <input class="form-check-input" type="checkbox" name="remember">
-                <span class="form-check-label">تذكرني</span>
-              </label>
-              <a class="text-primary small" href="javascript:void(0)">نسيت كلمة المرور؟</a>
-            </div>
-            <div class="d-grid">
-              <button type="submit" data-refresh="false" class="btn btn-primary">دخول</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {{-- Core JS (يتضمن jQuery/Bootstrap) --}}
-  <script src="{{ asset('backend/assets/plugins/global/plugins.bundle.js') }}"></script>
-  <script src="{{ asset('backend/assets/js/scripts.bundle.js') }}"></script>
-
-  {{-- jquery.form فقط (لا تعيد تضمين jQuery نفسه) --}}
-  <script src="{{ asset('backend/assets/js/jquery.form.min.js') }}"></script>
-
-  <script>
-    // Ajax handler موحد
-    $('.ajaxForm').ajaxForm({
-      beforeSubmit: function (arr, $form) { $form.find(':submit').prop('disabled', true); },
-      success: function (json, status, xhr, $form) {
-        $form.find(':submit').prop('disabled', false);
-        if (json?.status == 1) {
-          // رسائل حسب نظامك (toastr/alert)
-          // toastr.success(json.msg || 'تم بنجاح');
-          $form.resetForm();
-          // أغلق أي مودال يحتوي هذا الفورم
-          const modalEl = $form.closest('.modal').get(0);
-          if (modalEl) bootstrap.Modal.getInstance(modalEl)?.hide();
-        } else {
-          alert(json?.msg || 'حدث خطأ!');
-        }
-      },
-      error: function (xhr, status, err) {
-        $('.ajaxForm :submit').prop('disabled', false);
-        let msg = 'حدث خطأ غير متوقع!';
-        if (xhr.status === 422 && xhr.responseJSON?.errors) {
-          msg = Object.values(xhr.responseJSON.errors).map(e => e[0]).join('\n');
-        } else if (xhr.responseJSON?.message) {
-          msg = xhr.responseJSON.message;
-        }
-        alert(msg);
-      }
-    });
-
-    // فعّل Select2 داخل مودال "تسجيل أسرة"
-    const addFamilyModal = document.getElementById('addFamilyModal');
-    addFamilyModal.addEventListener('shown.bs.modal', function () {
-      $('#camp_id').select2({
-        dropdownParent: $('#addFamilyModal'),
-        width: '100%',
-        dir: 'rtl',
-        placeholder: 'اختر المخيم',
-        allowClear: true
-      });
-    });
-    // لو اتقفل المودال، دمّر Select2 لتفادي مضاعفة التهيئة
-    addFamilyModal.addEventListener('hidden.bs.modal', function () {
-      const $sel = $('#camp_id');
-      if ($sel.hasClass('select2-hidden-accessible')) { $sel.select2('destroy'); }
-    });
-  </script>
 
 </body>
 

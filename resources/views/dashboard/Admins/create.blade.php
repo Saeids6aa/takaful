@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-sm-12">
-        <form method="post" action="{{ route('admins.store') }}" class="ajaxForm" enctype="multipart/form-data">
-            {{ csrf_field() }}
+        <form method="post" action="{{ route('admins.store') }}" class="ajaxForm" eenctype="multipart/form-data" >
+            {{-- {{ csrf_field() }} --}}
+              @csrf
 
 
             <div class="form-group row">
@@ -55,7 +56,7 @@
             <div class="form-group row">
                 <label for="image" class="col-3 col-form-label">الصورة :</label>
                 <div class="col-8">
-                    <input class="form-control" name="image" id="image" type="file" accept="image/*">
+                    <input class="form-control" name="image" id="image" type="file">
                 </div>
             </div>
 
